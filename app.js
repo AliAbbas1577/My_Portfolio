@@ -138,8 +138,8 @@
 // console.log(c);
 
 
-const express = require('express');
-const app = express();
+// const express = require('express');
+// const app = express();
 // app.get('/about', (req, res) => {
 //         const person = [{
 //                 name: "ali",
@@ -161,7 +161,7 @@ const app = express();
 // app.listen(8080);
 
 
-console.log("somechanges here");
+// console.log("somechanges here");
 
 
 
@@ -171,21 +171,21 @@ console.log("somechanges here");
 //Lecture 12
 //......we are going dynamic pages thats why we use 
 //ejs pckg (template engine)
-app.set('view engine', 'ejs');
-app.get('/profile', (req, res) => {
-        const person = {
-                name: "ali",
-                age: 20,
-                prof: "algo",
-                skills:['php','unity','C','java']
-        };
-       res.render('profile',{person});
-});
-app.get('/login', (req, res) => {
-        const login="login";
-       res.render('login',{login});
-});
-app.listen(8080);
+// app.set('view engine', 'ejs');
+// app.get('/profile', (req, res) => {
+//         const person = {
+//                 name: "ali",
+//                 age: 20,
+//                 prof: "algo",
+//                 skills:['php','unity','C','java']
+//         };
+//        res.render('profile',{person});
+// });
+// app.get('/login', (req, res) => {
+//         const login="login";
+//        res.render('login',{login});
+// });
+// app.listen(8080);
 
 //including header file should be use for render 
 //html in common files like I created login & profile
@@ -195,4 +195,45 @@ app.listen(8080);
 
 
 // Lecture 13 Middleware
-// what is ?  poem another origin another pappaskldskldjasdjlaskdjklasjd commited latest
+// what is ? 
+
+//these are function used with routes we modify request and response
+//because if we want to restrict our site in some country we have to use 
+//middleware .....we can create only one time and use again and again
+
+
+
+//first create basic routes
+const express = require('express');
+const app = express();
+
+//application level middleware
+const reqFilter=(req,res,next)=>{
+        if(!req.query.age){
+                res.send("Plz provide age");
+        }
+        else if(req.query.age<18){
+                res.send("you cannot access");
+                console.log("you cannot access");
+        }
+        else{
+
+                next();
+        }
+}
+// app.use(reqFilter); (application level)
+
+app.get('/login',reqFilter, (req, res) => { //route level
+        const login="login";
+       res.send(login);
+});
+
+app.get('/users', (req, res) => {
+        const user="users";
+       res.send(user);
+});
+app.listen(5000);
+
+
+
+//now we are moving route level middleware which work on single route and multiple group routees
