@@ -245,7 +245,9 @@ const express = require('express');
 // Lecture 13 Mongo DB
 // For create conecttion
 // Npm i mongodb===>command
-const dbConnection=require('./mongodb');
+
+/*This is by using simple mongo db data get */
+
 // const MongoClient=require('mongodb').MongoClient;
 // const url='mongodb://127.0.0.1:27017';
 // const client=new MongoClient(url);
@@ -268,7 +270,9 @@ const dbConnection=require('./mongodb');
 // });
 
 
+/*by using export and Import method  */
 
+const dbConnection=require('./mongodb');
 const main=async ()=>{
       //console.log(dbConnection);
         let data =await dbConnection();
