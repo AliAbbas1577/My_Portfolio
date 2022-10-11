@@ -204,37 +204,79 @@
 
 
 //first create basic routes
+ //const { response } = require('express');
 const express = require('express');
-const app = express();
+ const app = express();
 
-//application level middleware
-const reqFilter=(req,res,next)=>{
-        if(!req.query.age){
-                res.send("Plz provide age");
-        }
-        else if(req.query.age<18){
-                res.send("you cannot access");
-                console.log("you cannot access");
-        }
-        else{
+// //application level middleware
+// const reqFilter=(req,res,next)=>{
+//         if(!req.query.age){
+//                 res.send("Plz provide age");
+//         }
+//         else if(req.query.age<18){
+//                 res.send("you cannot access");
+//                 console.log("you cannot access");
+//         }
+//         else{
 
-                next();
-        }
-}
+//                 next();
+//         }
+// }
 // app.use(reqFilter); (application level)
 
-app.get('/login',reqFilter, (req, res) => { //route level
-        const login="login";
-       res.send(login);
-});
+// app.get('/login',reqFilter, (req, res) => { //route level
+//         const login="login";
+//        res.send(login);
+// });
 
-app.get('/users', (req, res) => {
-        const user="users";
-       res.send(user);
-});
-app.listen(5000);
+// app.get('/users', (req, res) => {
+//         const user="users";
+//        res.send(user);
+// });
+// app.listen(5000);
 
 
 
 //now we are moving route level middleware which work on single route and multiple group routees
 //Studied now mongo db
+
+
+
+// Lecture 13 Mongo DB
+// For create conecttion
+// Npm i mongodb===>command
+const dbConnection=require('./mongodb');
+// const MongoClient=require('mongodb').MongoClient;
+// const url='mongodb://127.0.0.1:27017';
+// const client=new MongoClient(url);
+// const database='e-comm';
+// async function dbConnection(){
+//          let result=await client.connect();
+//          let db=result.db(database);
+//          return db.collection('products');
+//         // let response=await(collection.find({name:"camera"}).toArray());
+//         // console.log(response);
+// }
+
+
+// console.log(dbConnection());
+// dbConnection().then((resp)=>{
+// // console.log(resp.find().toArray());
+// resp.find().toArray().then((d)=>{
+// console.log(d);
+// });
+// });
+
+
+
+const main=async ()=>{
+      //console.log(dbConnection);
+        let data =await dbConnection();
+        data=await data.find().toArray();
+        console.log(data);
+        //console.log(dbConnection);
+}
+main();
+
+
+
