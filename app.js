@@ -270,17 +270,40 @@ const express = require('express');
 // });
 
 
-/*by using export and Import method  */
+/*by using export and Import method */
 
 const dbConnection=require('./mongodb');
-const main=async ()=>{
-      //console.log(dbConnection);
-        let data =await dbConnection();
-        data=await data.find().toArray();
-        console.log(data);
-        //console.log(dbConnection);
-}
-main();
 
+
+//Getting data using Express
+// const getdata=async ()=>{
+//       //console.log(dbConnection);
+//         let data =await dbConnection();
+//         data=await data.find().toArray();
+//         console.log(data);
+//         //console.log(dbConnection);
+// }
+
+
+
+//getting data by using Postman using NodeJS,Mongo,and Express
+// app.get('/',async (req,resp)=>{
+//   let data =await dbConnection();
+//   data=await data.find().toArray();
+//   resp.send(data);
+// });
+// app.listen('5000');
+
+app.use(express.json());
+//Now we are going to send data and save in DB with Postman
+app.post('/',async (req,resp)=>{
+  console.log(req.body);
+  let data =await dbConnection();
+  let result=await data.insert(req.body);
+ 
+  resp.send(result);
+});
+
+app.listen('5000');
 
 
